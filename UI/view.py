@@ -13,30 +13,31 @@ class View(ft.UserControl):
         self._controller = None
         # graphical elements
         self._title = None
-        self.txt_name = None
-        self.btn_hello = None
         self.txt_result = None
         self.txt_container = None
 
     def load_interface(self):
         # title
-        self._title = ft.Text("Hello World", color="blue", size=24)
+        self._title = ft.Text("Tdp flights manager 2024", color="blue", size=24)
         self._page.controls.append(self._title)
 
-        #ROW with some controls
-        # text field for the name
-        self.txt_name = ft.TextField(
-            label="name",
-            width=200,
-            hint_text="Insert a your name"
-        )
-
-        # button for the "hello" reply
-        self.btn_hello = ft.ElevatedButton(text="Hello", on_click=self._controller.handle_hello)
-        row1 = ft.Row([self.txt_name, self.btn_hello],
-                      alignment=ft.MainAxisAlignment.CENTER)
+        self._txtInNumC=ft.TextField(label="Num compagnie", width=250)
+        self._btnAnalizza=ft.ElevatedButton(text="Analizza Aeroporti",on_click=self._controller.handleAnalizza)
+        self._btnConnessi=ft.ElevatedButton(text="Aeropèorti Connessi", on_click=self._controller.handleConnessi,disabled=True)
+        row1=ft.Row([self._txtInNumC,self._btnAnalizza,self._btnConnessi],alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
 
+        self._ddAeroportP=ft.Dropdown(label="Partenza",disabled=True)
+        self._ddAeroportA = ft.Dropdown(label="Arrivo",disabled=True)
+        self._btnCercaConnessione=ft.ElevatedButton(text="Test Connessione",on_click=self._controller.handleTestConnessione,disabled=True)
+        self._controller.fillDD()
+        row2 = ft.Row([self._ddAeroportP, self._ddAeroportA,self._btnCercaConnessione], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row2)
+
+        self._txtInNumTratto=ft.TextField(label="Num Tratto Max",width=250,disabled=True)
+        self._btnCercaItenerario=ft.ElevatedButton(text="Cerca Itinerarario",on_click=self._controller.handleCercaItinerario,disabled=True)
+        row3 = ft.Row([self._txtInNumTratto, self._btnCercaItenerario], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row3)
         # List View where the reply is printed
         self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         self._page.controls.append(self.txt_result)
